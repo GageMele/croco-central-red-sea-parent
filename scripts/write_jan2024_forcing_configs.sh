@@ -8,6 +8,14 @@ set +H
 : "${CRS_GLORYS_DIR:?}"
 : "${CRS_ERA5_DIR:?}"
 : "${CRS_GLORYS_DATASET:?}"
+: "${CRS_THETA_S:?copy from validated January IBC/croco.in}"
+: "${CRS_THETA_B:?copy from validated January IBC/croco.in}"
+: "${CRS_N:?copy from validated January param.h}"
+: "${CRS_HC:?copy from validated January IBC/croco.in}"
+: "${CRS_OBC_SOUTH:?set 0 or 1 from validated cppdefs.h}"
+: "${CRS_OBC_NORTH:?set 0 or 1 from validated cppdefs.h}"
+: "${CRS_OBC_WEST:?set 0 or 1 from validated cppdefs.h}"
+: "${CRS_OBC_EAST:?set 0 or 1 from validated cppdefs.h}"
 
 mkdir -p "$CRS_DIR/CONFIG" "$CRS_GLORYS_DIR" "$CRS_ERA5_DIR"
 
@@ -95,15 +103,13 @@ Horig = 0
 use_calendar = False
 
 [Sigma_Params]
-# EDIT HERE: copy the exact values from the validated January croco.in/param.h.
-theta_s = 7
-theta_b = 2
-N = 32
-hc = 200
+theta_s = $CRS_THETA_S
+theta_b = $CRS_THETA_B
+N = $CRS_N
+hc = $CRS_HC
 
 [IBC_Options]
-# EDIT HERE: must match the validated cppdefs.h open boundaries exactly.
-obc_dict = {'south':1, 'north':1, 'west':1, 'east':0}
+obc_dict = {'south':$CRS_OBC_SOUTH, 'north':$CRS_OBC_NORTH, 'west':$CRS_OBC_WEST, 'east':$CRS_OBC_EAST}
 tracers = ["temp", "salt"]
 uv_conserv = 1
 min_nb_valid_data = 4
